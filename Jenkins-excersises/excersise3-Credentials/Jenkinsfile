@@ -1,4 +1,7 @@
 pipeline {
+
+  agent any
+
   environment {
     // environment variables
     SOME_VAR = "SOME VALUE"
@@ -11,7 +14,6 @@ pipeline {
     OTHER_VAR = "${SOME_VAR}"
   }
 
-  agent any
 
   stages {
     stage("Credential Test") {
