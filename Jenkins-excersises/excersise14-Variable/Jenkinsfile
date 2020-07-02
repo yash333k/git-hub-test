@@ -1,5 +1,5 @@
 pipeline {
-  agent {
+  any {
     // executes on an executor with the label 'some-label' or 'docker'
     label "some-label || docker"
   }
