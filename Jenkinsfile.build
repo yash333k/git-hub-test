@@ -1,0 +1,11 @@
+pipeline {
+   agent any
+
+   stages {
+      stage('Print Echo') {
+         steps {
+            echo 'Hello World Jenkins'
+         }
+      }
+   }
+}
