@@ -1,9 +1,9 @@
 pipeline {
   agent any
 
-  stages{
-    stage("Build"){
-      steps{
+  stages {
+    stage("Build") {
+      steps {
         sh 'docker build -f "Dockerfile" sridhar/Myubuntu:14:04 .' 
 }
 }
