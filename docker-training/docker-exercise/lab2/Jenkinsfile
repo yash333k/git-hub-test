@@ -4,7 +4,7 @@ pipeline {
   stages {
     stage("Build") {
       steps {
-        sh 'docker build -f "Dockerfile" -t sridhar/Myubuntu:14.04 .' 
+        sh 'docker build -f "Dockerfile" -t sridhar/myubuntu:14.04 .' 
 }
 }
 }
