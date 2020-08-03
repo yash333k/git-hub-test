@@ -4,8 +4,8 @@ pipeline {
   stages {
     stage("Build image and container") {
       steps {
-        sh 'sudo docker build -t pythonapp:1.0 Dockerlab/Dockerfile'
-        sh 'sudo docker run -d -p 32769:5000 pythonapp:1.0'
+        sh 'docker build -t pythonapp:1.0 Dockerlab/Dockerfile'
+        sh 'docker run -d -p 32769:5000 pythonapp:1.0'
       }
     }
   }
