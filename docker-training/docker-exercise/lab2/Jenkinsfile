@@ -4,7 +4,7 @@ pipeline {
   stages{
     stage("Build"){
       steps{
-        sh 'docker build -f ./docker-training/docker-exercise/lab2/Dockerfile -t myubuntu' 
+        sh 'docker build -t myubuntu /docker-training/docker-exercise/lab2' 
 }
 }
 }
