@@ -1,11 +1,12 @@
 pipeline {
   agent any
-
-  stages{
-    stage('Build'){
-      steps{
-        sh 'docker build -t mypythonapp:0.1 /var/lib/jenkins/workspace/Lab5/lab5' 
-}
-}
-}
+   
+  stages {
+    stage("Build image and container") {
+      steps {
+        sh 'docker build -t mypythonapp:0.1 /var/lib/jenkins/workspace/Lab5/lab5'
+        sh 'docker run -d -p 32769:5000 mypythonapp:0.1'
+      }
+    }
+  }
 }
