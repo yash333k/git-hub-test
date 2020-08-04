@@ -1,14 +1,11 @@
 #!/usr/bin/env python
-
+     
 from flask import Flask
-
 app = Flask(__name__)
 
-@app.route('/hi')
-
+@app.route("/hi")
 def hello_world():
-     return 'this is python webapp'
+    return "Hello World!"
 
- if__name__=='__main__';
-     app.run(host='0.0.0.0',post=5000)
-
+if __name__ == "__main__":
+    app.run(host='0.0.0.0',post=5000)
