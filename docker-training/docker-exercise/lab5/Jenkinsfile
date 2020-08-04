@@ -4,7 +4,7 @@ pipeline {
   stages{
     stage('Build'){
       steps{
-        sh 'docker build -f "Dockerfile" -t mypythonapp /var/lib/jenkins/workspace/Lab5' 
+        sh 'docker build -t mypythonapp:0.1 /var/lib/jenkins/workspace/Lab5' 
 }
 }
 }
