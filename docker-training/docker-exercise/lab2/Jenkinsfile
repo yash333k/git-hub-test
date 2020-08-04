@@ -4,7 +4,7 @@ pipeline {
   stages{
     stage("Build"){
       steps{
-        sh 'docker build -t myubuntu /docker-training/docker-exercise/lab2' 
+        sh 'docker build -t myubuntu /var/lib/jenkins/workspace/lab2/docker-training/docker-exercise/lab2' 
 }
 }
 }
