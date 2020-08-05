@@ -1,0 +1,12 @@
+pipeline {
+  agent any
+   
+  stages {
+    stage("Build image and run container") {
+      steps {
+        sh 'docker build -t myjavaapp:0.1 /var/lib/jenkins/workspace/Lab1/docker-training/docker-exercise/lab1'
+        sh 'docker run -d -p 32770:5000 myjavaapp:0.1'
+      }
+    }
+  }
+}
