@@ -2,9 +2,11 @@ FROM ubuntu
 
 RUN apt-get update
 
-RUN apt-get install -y nginx 
+RUN apt-get install -y nginx
 
-COPY index.nginx-debian.html /var/www/html
+WORKDIR /var/www/html
+
+COPY ./index.nginx-debian.html /var/www/html
 
 EXPOSE 80
 
