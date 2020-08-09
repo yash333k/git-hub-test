@@ -1,0 +1,12 @@
+pipeline {
+  agent any
+   
+  stages {
+    stage("Build image and container") {
+      steps {
+        sh 'docker build -t nginxsunil:1.0 .'
+        sh 'docker run -d -p 3244:80 nginxsunil'
+      }
+    }
+  }
+}
