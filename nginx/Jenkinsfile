@@ -4,7 +4,7 @@ pipeline {
   stages{
     stage('Build Nginx Image and Container'){
       steps{
-        sh 'docker build -f ./nginx/Dockerfile -t nginxvenkata:1.0'
+        sh 'docker build -f ./nginx/Dockerfile -t nginxvenkata:1.0 .'
         sh 'docker run -d -p 3244:80 nginxvenkata:1.0'
 
 }
