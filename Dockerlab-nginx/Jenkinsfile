@@ -15,7 +15,7 @@ registryCredential = 'dockerhub_id'
     stage('Deploy Image') {
        steps {
            withDockerRegistry([credentialsId: "dockerhub_id", url: ""]) {
-               sh 'docker push nginxsunil'
+               sh 'docker push daidasunny/nginxsunil:sunil'
            }
        }
     }
