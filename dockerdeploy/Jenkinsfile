@@ -5,7 +5,7 @@ pipeline {
   stages{
     stage('Build and deploy multiple container using docker compose'){
       steps{
-        sh './docker-compose up -d'
+        sh 'docker-compose -f ./dockerdeploy/docker-compose.yml'
 
       }
     }
