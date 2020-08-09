@@ -12,11 +12,12 @@ registryCredential = 'dockerhub_id'
         sh 'docker run -d -p 3244:80 nginxsunil:1.0'
       }
     }
-    stage ("deploy image") {
-      steps {
-        docker.withRegistry(registryCredential)
-        sh 'docker push nginxsunil'
-      }
+    stage('Deploy Image') {
+       steps {
+           withDockerRegistry([credentialsId: "dockerhub_id", url: ""]) {
+               sh 'docker push daidasunny/nginxsunil'
+           }
+       }
     }
   }
 }
