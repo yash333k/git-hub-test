@@ -8,7 +8,7 @@ registryCredential = 'dockerhub_id'
   stages {
     stage("Build image and container") {
       steps {
-        sh 'docker build -f ./Dockerlab-nginx/Dockerfile -t nginxsunil:latest.'
+        sh 'docker build -f ./Dockerlab-nginx/Dockerfile -t nginxsunil:latest .'
         sh 'docker tag nginxsunil:latest daidasunny/nginxtask:sunil'
         sh 'docker run -d -p 3244:80 daidasunny/nginxtask:sunil'
       }
