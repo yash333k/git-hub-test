@@ -1,8 +1,5 @@
 pipeline {
-environment {
-registry = "daidasunny/nginxsunil"
-registryCredential = 'dockerhub_id'
-}
+
   agent any
 
   stages {
