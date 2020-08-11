@@ -15,7 +15,7 @@ registryCredential = 'dockerhub_id'
     }
     stage('Deploy Image') {
        steps {
-           withDockerRegistry([credentialsId: "dockerhub_id", url: ""]) {
+           withCredentials([usernamePassword(credentialsId: 'dockerhub_id', passwordVariable: 'dockerhub_idPassword', usernameVariable: 'dockerhub_idUser')]) {
                sh 'docker push daidasunny/nginxtask:sunil'
            }
        }
