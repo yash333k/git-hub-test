@@ -1,0 +1,16 @@
+pipeline {
+  environment {
+    registry = "sreddy12333/docker-test"
+    registryCredential = ‘@Computer9’
+  }
+  agent any
+  stages {
+    stage('Building image') {
+      steps{
+        script {
+          docker.build registry + ":$BUILD_NUMBER"
+        }
+      }
+    }
+  }
+}
