@@ -1,31 +1,33 @@
-pipeline {
-  environment {
-    registry = "sreddy12333/docker-test"
-    registryCredential = ‘@Computer9’
-    dockerImage = ''
-  }
-  agent any
-  stages {
-    stage('Building image') {
-      steps{
-        script {
-          docker.build registry + ":$BUILD_NUMBER"
-        }
-      }
-      stage('Deploy Image') {
-      steps{
-        script {
-          docker.withRegistry( '', registryCredential ) {
-            dockerImage.push()
-          }
-        }
-      }
-    }
-      stage('Remove Unused docker image') {
-      steps{
-        sh "docker rmi $registry:$BUILD_NUMBER"
-      }
-    }
-    }
-  }
+def getDockerTag() {
+ def tag = sh script: 'git rev-parse HEAD', returnStdout: true 
+ return tag
 }
+
+pipeline {
+    agent any
+    environment {
+          Docker_tag = getDockerTag()
+      }
+    stages {
+          stage('build'){
+		      steps {
+			      script{
+                sh 'docker build . -t sreddy12333/devops-training:$Docker_tag'
+                withCredentials([string(credentialsId: 'sreddy12333', variable: 'docker-hub')]) {
+                sh 'docker login -u sreddy12333 -p $docker_password'
+                sh 'docker push sreddy12333/devops-training:$Docker_tag'
+                }
+             }
+		      }
+       }
+        stage('maven build') {
+            steps {
+                sh "mvn clean package"
+            }
+        }
+    }
+}
+
+
+
+
