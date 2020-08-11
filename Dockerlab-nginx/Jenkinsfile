@@ -9,14 +9,14 @@ registryCredential = 'dockerhub_id'
     stage("Build image and container") {
       steps {
         sh 'docker build -f ./Dockerlab-nginx/Dockerfile -t nginxsunil:latest .'
-        sh 'docker tag nginxsunil:latest daidasunny/nginxtask:reddy'
-        sh 'docker run -d -p 3244:80 daidasunny/nginxtask:reddy'
+        sh 'docker tag nginxsunil:latest daidasunny/nginxtest:reddy'
+        sh 'docker run -d -p 3244:80 daidasunny/nginxtest:reddy'
       }
     }
     stage('Deploy Image') {
        steps {
            withCredentials([usernamePassword(credentialsId: 'dockerhub_id', passwordVariable: 'dockerhub_idPassword', usernameVariable: 'dockerhub_idUser')]) {
-               sh 'docker push daidasunny/nginxtask:reddy'
+               sh 'docker push daidasunny/nginxtest:reddy'
            }
        }
     }
