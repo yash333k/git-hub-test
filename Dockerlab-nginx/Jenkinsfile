@@ -13,7 +13,8 @@ pipeline {
     stage('Deploy Image') {
        steps {
            withCredentials([usernamePassword(credentialsId: 'dockerhub_id', passwordVariable: 'dockerhub_idPassword', usernameVariable: 'dockerhub_idUser')]) {
-               sh 'docker push daidasunny/nginxtest:reddy'
+             sh "docker login -u ${env.dockerhub_idUser} -p ${env.dockerhub_idPassword}"
+             sh 'docker push daidasunny/nginxtest:reddy'
            }
        }
     }
