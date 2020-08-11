@@ -9,7 +9,7 @@ pipeline {
           Docker_tag = getDockerTag()
       }
     stages {
-          stage('build'){
+          stage('build and push Docker image'){
 		      steps {
 			      script{
                 sh 'docker build -f /var/lib/jenkins/workspace/nginx/docker-training/nginx-project/Jenkinsfile -t sreddy12333/devops-training:$Docker_tag .'
@@ -18,13 +18,8 @@ pipeline {
                 sh 'docker push sreddy12333/devops-training:$Docker_tag'
                 }
              }
-		      }
+	  }
        }
-        stage('maven build') {
-            steps {
-                sh "mvn clean package"
-            }
-        }
     }
 }
 
