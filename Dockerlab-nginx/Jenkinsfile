@@ -12,8 +12,8 @@ pipeline {
     }
     stage('Deploy Image') {
        steps {
-           withCredentials([usernamePassword(credentialsId: 'dockerhub_id', passwordVariable: 'dockerhub_idPassword', usernameVariable: 'dockerhub_idUser')]) {
-             sh "docker login -u ${env.dockerhub_idUser} --password-stdin ${env.dockerhub_idPassword}"
+           withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: "dockerhub_id", usernameVariable: 'DOCKER_HUB_USER', passwordVariable: 'DOCKER_HUB_PASSWORD']]) {
+      sh 'docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASSWORD'
              sh 'docker push daidasunny/nginxtest:reddy'
            }
        }
