@@ -14,7 +14,7 @@ pipeline {
 			      script{
                 sh 'docker build . -f /var/lib/jenkins/workspace/nginx/docker-training/nginx-project/Jenkinsfile -t sreddy12333/devops-training:$Docker_tag'
                 withCredentials([string(credentialsId: 'sreddy12333', variable: 'docker-hub')]) {
-                sh 'docker login -u sreddy12333 -p $docker_password'
+                sh 'docker login -u sreddy12333 -p $docker-hub'
                 sh 'docker push sreddy12333/devops-training:$Docker_tag'
                 }
              }
