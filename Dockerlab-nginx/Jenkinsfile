@@ -1,23 +1,36 @@
 pipeline {
-environment {
-registry = "daidasunny/nginxsunil"
-registryCredential = 'dockerhub_id'
-}
+
   agent any
 
   stages {
-    stage("Build image and container") {
-      steps {
-        sh 'docker build -f ./Dockerlab-nginx/Dockerfile -t daidasunny/nginx:reddy .'
-        sh 'docker run -d -p 3244:80 daidasunny/nginx:reddy'
-      }
+    stage("Build image") {
+        steps {
+        sh 'docker build -f ./Dockerlab-nginx/Dockerfile -t nginxsunil:latest .'
+        }
     }
-    stage('Deploy Image') {
-       steps {
-           withDockerRegistry([credentialsId: "dockerhub_id", url: ""]) {
-               sh 'docker push reddy'
-           }
-       }
+    stage("Tag the image") {
+        steps {
+        sh 'docker tag nginxsunil:latest daidasunny/nginxassignment:1.0'
+        }
+    }
+    stage('Push Image to Dockerhub') {
+        steps {
+             withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: "dockerhub_id", usernameVariable: 'DOCKER_HUB_USER', passwordVariable: 'DOCKER_HUB_PASSWORD']]) {
+        sh 'docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASSWORD'
+        sh 'docker push daidasunny/nginxassignment:1.0'
+            }
+        }
+    }
+    stage("Remove image locally") {
+        steps {
+        sh 'docker rmi nginxsunil:latest daidasunny/nginxassignment:1.0'
+        }
+    }
+    stage("Pull the image from Dockerhub and run container") {
+        steps {
+        sh 'docker pull daidasunny/nginxassignment:1.0'
+        sh 'docker run -d -p 3244:80 daidasunny/nginxassignment:1.0'
+        }
     }
   }
 }
