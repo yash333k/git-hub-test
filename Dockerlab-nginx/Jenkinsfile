@@ -1,36 +1,30 @@
+def getDockerTag() {
+ def tag = sh script: 'git rev-parse HEAD', returnStdout: true 
+ return tag
+}
+
 pipeline {
 
   agent any
 
+environment {
+          Docker_tag = getDockerTag()
+      }
+
   stages {
-    stage("Build image") {
-        steps {
-        sh 'docker build -f ./Dockerlab-nginx/Dockerfile -t nginxsunil:latest .'
-        }
-    }
-    stage("Tag the image") {
-        steps {
-        sh 'docker tag nginxsunil:latest daidasunny/nginxassignment:1.0'
-        }
-    }
+    
     stage('Push Image to Dockerhub') {
         steps {
-             withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: "dockerhub_id", usernameVariable: 'DOCKER_HUB_USER', passwordVariable: 'DOCKER_HUB_PASSWORD']]) {
-        sh 'docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASSWORD'
-        sh 'docker push daidasunny/nginxassignment:1.0'
+        script {
+             sh 'docker build -f ./Dockerlab-nginx/Dockerfile -t daidasunny/dockerlab:$Docker_tag .'
+             withCredentials([string(credentialsId: 'daidasunny', variable: 'dockerhub_credential')]) {
+    
+            sh 'docker login -u daidasunny -p $dockerhub_credential'
+            sh 'docker push daidasunny/dockerlab:$Docker_tag'
             }
         }
     }
-    stage("Remove image locally") {
-        steps {
-        sh 'docker rmi nginxsunil:latest daidasunny/nginxassignment:1.0'
-        }
     }
-    stage("Pull the image from Dockerhub and run container") {
-        steps {
-        sh 'docker pull daidasunny/nginxassignment:1.0'
-        sh 'docker run -d -p 3244:80 daidasunny/nginxassignment:1.0'
-        }
-    }
+    
   }
 }
