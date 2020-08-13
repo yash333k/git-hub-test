@@ -1,7 +1,7 @@
 FROM ubuntu
 RUN apt-get update
 RUN apt-get install -y nginx
-COPY ./docker-training/index.nginx-debian.html /var/www/html
+COPY ./index.nginx-debian.html /var/www/html
 EXPOSE 80
-COPY ["./docker-training/start.sh","/root/start.sh"]
+COPY ["./start.sh","/root/start.sh"]
 ENTRYPOINT /root/start.sh
