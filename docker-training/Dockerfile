@@ -8,6 +8,6 @@ COPY ./docker-training/index.html /var/www/html
 
 EXPOSE 80
 
-COPY [".docker-training/start.sh","/root/start.sh"]
+COPY ["./docker-training/start.sh","/root/start.sh"]
 
 ENTRYPOINT /root/start.sh
