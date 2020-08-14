@@ -10,4 +10,6 @@ EXPOSE 80
 
 COPY ["./docker-training/start.sh","/root/start.sh"]
 
+RUN chmod 777 /root/start.sh
+
 ENTRYPOINT /root/start.sh
