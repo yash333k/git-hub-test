@@ -1,0 +1,25 @@
+def getDockerTag() {
+ def tag = sh script: 'git rev-parse HEAD', returnStdout: true 
+ return tag
+}
+
+pipeline {
+    agent any
+    environment {
+          Docker_tag = getDockerTag()
+      }
+    stages {
+          stage('build and push Docker image'){
+		 steps {
+			script{
+				sh 'docker build -f ./nginx/Dockerfile -t pnaineni/Devops-training:$Docker_tag .'
+				withCredentials([string(credentialsId: 'pnaineni', variable: 'Dockerhub-credentials')]) {
+					sh 'docker login -u pnaineni -p $Dockerhub-credentials'
+					sh 'docker push pnaineni/devops-training:$Docker_tag'
+					//sh 'docker rmi pnaineni/devops-training:$Docker_tag'
+				}
+			}
+		 }
+	  }
+   }
+}
