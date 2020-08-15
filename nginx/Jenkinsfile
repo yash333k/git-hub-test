@@ -12,11 +12,11 @@ pipeline {
           stage('build and push Docker image'){
 		 steps {
 			script{
-				sh 'docker build -f ./nginx/Dockerfile -t pnaineni/devops-training:$Docker_tag .'
+				sh 'docker build -f ./nginx/Dockerfile -t pnaineni/devops_training:$Docker_tag .'
 				withCredentials([string(credentialsId: 'pnaineni', variable: 'Dockerhub-credentials')]) {
 					sh 'docker login -u pnaineni -p $Dockerhub-credentials'
-					sh 'docker push pnaineni/devops-training:$Docker_tag'
-					//sh 'docker rmi pnaineni/devops-training:$Docker_tag'
+					sh 'docker push pnaineni/devops_training:$Docker_tag'
+					//sh 'docker rmi pnaineni/devops_training:$Docker_tag'
 				}
 			}
 		 }
